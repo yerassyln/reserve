@@ -6,7 +6,6 @@
 
 import Vue from 'vue'
 import router from './router'
-
 window.Vue = require('vue').default;
 
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'

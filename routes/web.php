@@ -13,10 +13,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('application');
-});
 
+Route::get('/{any?}', App\Http\Controllers\PagesController::class);
+Route::get('/category/{any?}', App\Http\Controllers\PagesController::class);
+
+Route::post('/getRestaurantsMain',[App\Http\Controllers\RestaurantController::class,'getMain']);
+Route::post('/getRestaurantsAll',[App\Http\Controllers\RestaurantController::class,'index']);
+Route::post('/getAllCategories',[App\Http\Controllers\RestaurantController::class,'getAllCategories']);
+Route::post('/getCategories',[App\Http\Controllers\RestaurantController::class,'getCategories']);
 //Auth::routes();
 //
-//Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+//Route::get('/{any}', [App\Http\Controllers\ApplicationController::class, 'index'])->name('home');

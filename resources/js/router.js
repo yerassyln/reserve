@@ -1,6 +1,8 @@
 import Vue from "vue";
 import Router from "vue-router";
 import Index from "./views/Index.vue";
+import Category from "./views/Category.vue";
+import Restaurant from "./views/Restaurant.vue";
 import Navbar from "./components/header/Navbar";
 import Footer from "./components/footer/Footer";
 
@@ -20,6 +22,24 @@ const router = new Router({
             path: "/",
             name: "index",
             components: { default: Index, header: Navbar, footer: Footer },
+            props: {
+                header: { colorOnScroll: 400 },
+                footer: { backgroundColor: "black" }
+            }
+        },
+        {
+            path: "/category/",
+            name: "category",
+            components: { default: Category, header: Navbar, footer: Footer },
+            props: {
+                header: { colorOnScroll: 400 },
+                footer: { backgroundColor: "black" }
+            }
+        },
+        {
+            path: "/restaurant/",
+            name: "restaurant",
+            components: { default: Restaurant, header: Navbar, footer: Footer },
             props: {
                 header: { colorOnScroll: 400 },
                 footer: { backgroundColor: "black" }

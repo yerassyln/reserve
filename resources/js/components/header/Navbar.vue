@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <b-navbar toggleable="lg" type="dark" variant="info">
-            <b-navbar-brand href="#">
+            <b-navbar-brand href="/">
                 <img src="/images/logo/logo.png" alt="">
             </b-navbar-brand>
 
@@ -23,10 +23,10 @@
                     <b-nav-item-dropdown right v-if="logged">
                         <!-- Using 'button-content' slot -->
                         <template #button-content>
-                            <em>User</em>
+                            <em>Пользователь</em>
                         </template>
-                        <b-dropdown-item href="#">Profile</b-dropdown-item>
-                        <b-dropdown-item href="#">Sign Out</b-dropdown-item>
+                        <b-dropdown-item href="#">Профиль</b-dropdown-item>
+                        <b-dropdown-item href="#">Выйти</b-dropdown-item>
                     </b-nav-item-dropdown>
                 </b-navbar-nav>
 
@@ -34,14 +34,14 @@
                 <!-- Bottom aligned nav items -->
                 <b-navbar-nav class="ml-auto mt-1">
 
-                    <b-nav-item href="#">Lounge - Бары</b-nav-item>
+                    <b-nav-item href="/category?name=Lounge - Бары">Lounge - Бары</b-nav-item>
 
-                    <b-nav-item href="#">Фаст - фуды</b-nav-item>
+                    <b-nav-item href="/category?name=Фаст - фуды">Фаст - фуды</b-nav-item>
 
-                    <b-nav-item href="#">Семейный - ужин</b-nav-item>
-                    <b-nav-item href="#">Караоке</b-nav-item>
-                    <b-nav-item href="#">Iftar</b-nav-item>
-                    <b-nav-item href="#">Все рестораны</b-nav-item>
+                    <b-nav-item href="/category?name=Семейный - ужин">Семейный - ужин</b-nav-item>
+                    <b-nav-item href="/category?name=Караоке">Караоке</b-nav-item>
+                    <b-nav-item href="/category?name=Iftar">Iftar</b-nav-item>
+                    <b-nav-item href="/category">Все рестораны</b-nav-item>
 
 
 

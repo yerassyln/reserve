@@ -44,6 +44,7 @@ return [
         ],
 
         'mysql' => [
+
             'driver' => 'mysql',
             'url' => env('DATABASE_URL'),
             'host' => env('DB_HOST', '127.0.0.1'),
@@ -55,6 +56,11 @@ return [
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
             'prefix' => '',
+            'dump' => [
+                'dump_binary_path' => 'C:\OpenServer\modules\database\MySQL-8.0\bin', // only the path, so without `mysqldump` or `pg_dump`
+                'use_single_transaction',
+                'timeout' => 60 * 5, // 5 minute timeout
+            ],
             'prefix_indexes' => true,
             'strict' => true,
             'engine' => null,

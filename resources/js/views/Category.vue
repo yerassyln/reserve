@@ -1,132 +1,16 @@
 <template>
-    <div class="main-page">
-        <div class="main-swiper w-100">
-            <img alt="wallpaper" class="w-100" src="/images/wallpaper.png">
-
-        </div>
-        <div class="container transparent">
-            <div class="main-title w-50 mobile-full ml-auto">
-                <h1>Любимое место в один клик</h1>
-                <h4>Бронируй рестораны по душе</h4>
+    <div class="container" id="category">
+        <div class="row pt-2 ">
+            <div class="col-md-12 mb-5">
+                <h1 v-if="this.$route.query.name" v-html="this.$route.query.name"></h1>
             </div>
-            <div class="main-search w-50 mobile-full mt-5 ml-auto">
-                <b-nav-form>
-                    <b-form-input size="sm" class="mr-sm-2" placeholder="Поиск ресторанов"></b-form-input>
-                    <b-button size="sm" class="my-2 my-sm-0" type="submit">Искать</b-button>
-                </b-nav-form>
-            </div>
-        </div>
-        <div class="container category">
-            <div class="title">
-                <h1>Категории</h1>
-            </div>
-            <div class="cards mt-5 row">
-
-                <div class="col-md-4">
-                    <router-link :to="{path:'/category', query: { name: 'Восточная кухня' }}">
-                        <b-card
-                            title="Восточная кухня"
-                            img-src="/images/east.png"
-                            img-alt="Image"
-                            img-top
-                            tag="article"
-                            class="mb-2"
-                        >
-                            <!--                <b-card-text>-->
-                            <!--                    Some quick example text to build on the card title and make up the bulk of the card's content.-->
-                            <!--                </b-card-text>-->
-                        </b-card>
-                    </router-link>
+            <div class="col-md-4 ">
+                <div class="title">
+                    <h4>Фильтры</h4>
                 </div>
 
-                <div class="col-md-4">
-                    <router-link :to="{path:'/category', query: { name: 'Iftar' }}">
-                        <b-card
-                            title="Iftar - Ауызашар"
-                            img-src="/images/iftar.png"
-                            img-alt="Image"
-                            img-top
-                            tag="article"
-                            class="mb-2"
-                        >
-                            <!--                <b-card-text>-->
-                            <!--                    Some quick example text to build on the card title and make up the bulk of the card's content.-->
-                            <!--                </b-card-text>-->
-                        </b-card>
-                    </router-link>
-                </div>
-
-                <div class="col-md-4">
-                    <router-link :to="{path:'/category', query: { name: 'Итальянская кухня' }}">
-                        <b-card
-                            title="Итальянская кухня"
-                            img-src="/images/italian.png"
-                            img-alt="Image"
-                            img-top
-                            tag="article"
-                            class="mb-2"
-                        >
-                            <!--                <b-card-text>-->
-                            <!--                    Some quick example text to build on the card title and make up the bulk of the card's content.-->
-                            <!--                </b-card-text>-->
-                        </b-card>
-                    </router-link>
-                </div>
-
-            </div>
-        </div>
-        <div class="container pt-5 best-category">
-            <div class="title">
-                <h1>Лучшее от Reserve.kz</h1>
-            </div>
-            <div class="cards mt-5 row">
-
-
-                <div class="col-md-4" v-for="item in restaurantList" :key="item.id">
-                    <router-link :to="{path:'/restaurant',query:{name:item.name}}">
-                        <b-card
-                            :title="item.name"
-                            img-src="/images/vista.png"
-                            img-alt="Image"
-                            img-top
-                            tag="article"
-                            class="mb-2"
-                        >
-                            <b-card-text>
-                                <p v-html="item.description">
-                                    Ресторан Vista находится на 30 этаже Ritz Carlton. </p>
-                                <div class="row">
-                                    <div class="col-md-9">
-                                        <p class="address">
-                                            <b-icon-cursor></b-icon-cursor>
-                                            &nbsp
-                                            <span>Ritz Carlton hotel, пр. Аль-Фараби, 77/7</span>
-                                        </p>
-                                        <p>
-                                            <b-icon-phone></b-icon-phone>
-                                            &nbsp
-                                            <span>+7 727 332 88 88</span>
-                                        </p>
-                                    </div>
-                                    <div class="col-md-3 grade">
-                                        <h4 v-html="item.rating">4.7</h4>
-                                    </div>
-                                </div>
-                            </b-card-text>
-                        </b-card>
-                    </router-link>
-                </div>
-
-            </div>
-        </div>
-        <div class="container pt-5 choose">
-            <div class="title">
-                <h1>Подобрать ресторан</h1>
-            </div>
-            <div class="search-block">
-
-                <form class="row">
-                    <div class="col-md-4">
+                <form class="row filters">
+                    <div class="col-md-12">
                         <div class="row">
                             <div class="col-md-6">
                                 <label>Дата:</label>
@@ -138,7 +22,7 @@
                             </div>
                             <hr>
                         </div>
-                        <div class="row mt-3">
+                        <div v-if="!this.$route.query.name" class="row mt-3">
                             <div class="col-md-12">
                                 <b-form-group label="" v-slot="{ ariaDescribedby }">
                                     <b-form-radio-group
@@ -152,7 +36,7 @@
                                 </b-form-group>
                             </div>
                         </div>
-                        <div class="row mt-3" v-if="restaurant_type==='chosen'">
+                        <div class="row mt-3" v-if="!this.$route.query.name&&restaurant_type==='chosen'">
                             <div class="col-md-12">
                                 <b-form-group label="" v-slot="{ ariaDescribedby }">
                                     <b-form-radio-group
@@ -166,8 +50,9 @@
                                 </b-form-group>
                             </div>
                         </div>
+                        <hr>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-12">
                         <div class="row">
                             <div class="col-md-12">
                                 <b-form-group label="" v-slot="{ ariaDescribedby }">
@@ -196,10 +81,11 @@
                             <div v-else class="col-md-12">
                                 <div class="row mb-2">
                                     <div class="col-md-6">
-                                        <b-form-input type="text" :value="min_price"></b-form-input>
+                                        <b-form-input type="text" v-model="min_price"></b-form-input>
+
                                     </div>
                                     <div class="col-md-6">
-                                        <b-form-input type="text" :value="max_price"></b-form-input>
+                                        <b-form-input type="text" v-model="max_price"></b-form-input>
                                     </div>
                                 </div>
 
@@ -229,8 +115,9 @@
                                 </div>
                             </div>
                         </div>
+                        <hr>
                     </div>
-                    <div class="col-md-4 last-filter">
+                    <div class="col-md-12">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="row">
@@ -252,45 +139,78 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-12 text-center">
-
-                                <b-button class="my-2 my-sm-0" @click="search()">Искать</b-button>
-                            </div>
-                        </div>
                     </div>
                 </form>
+            </div>
+            <div class="col-md-8">
+                <h4>Список ресторанов</h4>
+                <div class="row mt-4">
+
+                    <div class="col-md-6 mb-2" v-for="item in restaurantList" :key="item.id">
+                        <router-link :to="{path:'/restaurant',query:{name:item.name}}">
+                            <b-card
+                                :title="item.name"
+                                img-src="/images/vista.png"
+                                img-alt="Image"
+                                img-top
+                                tag="article"
+                                class="mb-2"
+                            >
+                                <b-card-text>
+                                    <p v-html="item.description">
+                                        Ресторан Vista находится на 30 этаже Ritz Carlton. </p>
+                                    <div class="row">
+                                        <div class="col-md-9">
+                                            <p class="address">
+                                                <b-icon-cursor></b-icon-cursor>
+                                                &nbsp
+                                                <span>Ritz Carlton hotel, пр. Аль-Фараби, 77/7</span>
+                                            </p>
+                                            <p>
+                                                <b-icon-phone></b-icon-phone>
+                                                &nbsp
+                                                <span>+7 727 332 88 88</span>
+                                            </p>
+                                        </div>
+                                        <div class="col-md-3 grade">
+                                            <h4 v-html="item.rating">4.7</h4>
+                                        </div>
+                                    </div>
+                                </b-card-text>
+                            </b-card>
+                        </router-link>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-import axios from 'axios'
+import axios from "axios";
 
 export default {
-    name: "Index",
+    name: "category",
     data() {
         return {
             restaurantList: [],
-            categoriesList: [],
-
+            restaurantListAll: [],
             restaurant_type: 'chosen',
             typeOptions: [
                 {text: 'Вид кухни', value: 'chosen'},
                 {text: 'Все рестораны', value: 'type_all'},
             ],
-            restaurant_chosen: 'chosen',
+            restaurant_chosen: '',
             restaurantOptions: [
-                {text: 'Европейская кухня', value: 'european'},
-                {text: 'Азиатская кухня', value: 'asian'},
-                {text: 'Итальянская кухня', value: 'italian'},
-                {text: 'Казахская кухня', value: 'kazakh'},
-                {text: 'Турекая кухня', value: 'turkish'},
-                {text: 'Русская кухня', value: 'russian'},
-                {text: 'Восточная кухня', value: 'east'},
-                {text: 'Фаст Фуд', value: 'fast_food'},
-                {text: 'Кофе и десерты', value: 'coffee'},
+                {text: 'Европейская кухня', value: 'Европейская кухня'},
+                {text: 'Азиатская кухня', value: 'Азиатская кухня'},
+                {text: 'Итальянская кухня', value: 'Итальянская кухня'},
+                {text: 'Казахская кухня', value: 'Казахская кухня'},
+                {text: 'Турекая кухня', value: 'Турекая кухня'},
+                {text: 'Русская кухня', value: 'Русская кухня'},
+                {text: 'Восточная кухня', value: 'Восточная кухня'},
+                {text: 'Фаст Фуд', value: 'Фаст Фуд'},
+                {text: 'Кофе и десерты', value: 'Кофе и десерты'},
             ],
             price_type: 'chosen',
             priceOptions: [
@@ -309,7 +229,7 @@ export default {
                 {text: 'Потратить бонусы', value: 'spend_bonuses'},
                 {text: 'С танцполом', value: 'with_dancefloor'},
             ],
-            price_chosen: 'cheap',
+            price_chosen: '',
             priceListOptions: [
                 {text: 'Дешевые', value: 'cheap'},
                 {text: 'Средние', value: 'medium'},
@@ -320,28 +240,127 @@ export default {
         }
     },
     methods: {
-        search() {
-
-        }
-        ,
-        getRestaurantsMain() {
-            axios.post('/getRestaurantsMain').then(response => {
-                this.restaurantList = response.data
-            })
-        },
         getRestaurantsAll() {
-            axios.post('/getRestaurantsAll').then(response => {
-                this.categoriesList = response.data
+            axios.post('/getRestaurantsAll',
+                {
+                    category: this.$route.query.name
+                }).then(response => {
+
+                this.restaurantListAll = response.data
+                this.restaurantList = response.data
+                if(this.$route.query.name){
+                    this.filterByCategory(this.$route.query.name)
+                }
+
             })
         },
+        filterByCategory(val) {
+            let restaurantList = this.restaurantListAll
+
+            restaurantList = restaurantList.filter((item) => {
+
+                return (item.category === val)
+            })
+            this.restaurantList = restaurantList;
+        },
+        filterByPrice(val1, val2) {
+            let restaurantList = this.restaurantListAll
+
+            restaurantList = restaurantList.filter((item) => {
+
+                return (item.price >= val1 && item.price < val2)
+            })
+            this.restaurantList = restaurantList;
+        },
+        filterByRating(val) {
+
+            let restaurantList = this.restaurantListAll
+
+            restaurantList = restaurantList.filter((item) => {
+
+                return (item.rating >= val)
+            })
+            this.restaurantList = restaurantList;
+        },
+        filterAdditional(val){
+            let restaurantList = this.restaurantListAll
+
+            restaurantList = restaurantList.filter((item) => {
+                if(val===1){
+                    return (item.discounts === 1)
+                }
+                if(val===2){
+                    return (item.bonus_usage === 1)
+                }
+                if(val===3){
+                    return (item.dance_fphloor === 1)
+                }
+            })
+            this.restaurantList = restaurantList;
+        }
+
     },
-    components: {},
     mounted() {
-        this.getRestaurantsMain();
         this.getRestaurantsAll();
+
+
+    },
+    computed: {
+        minAndMax() {
+            const {min_price, max_price} = this
+            return {min_price, max_price}
+        }
+    },
+    watch: {
+        restaurant_chosen: function (val) {
+            this.filterByCategory(val)
+        },
+        price_chosen: function (val) {
+            if (val === 'cheap') {
+                this.filterByPrice(0, 3000)
+            } else if (val === 'medium') {
+
+                this.filterByPrice(3000, 10000)
+            } else {
+                this.filterByPrice(10000, 1000000)
+            }
+        },
+        minAndMax: function (val, val1) {
+            /*переменные которые только что изменили свои свойства*/
+            let min1 = parseInt(val['min_price'])
+            let max1 = parseInt(val['max_price'])
+
+            if (min1 > max1) {
+                this.max_price = min1 + 1
+            }
+            this.filterByPrice(min1, max1)
+
+
+        },
+        ratingFilter: function (val) {
+            if (val === 'all') {
+                this.filterByRating(0)
+            } else if(val === 'rating_6'){
+                this.filterByRating(6)
+            } else if(val === 'rating_8'){
+                this.filterByRating(8)
+            }
+        },
+        additionalFilter:function (val){
+            if(val==='discount'){
+               this.filterAdditional(1)
+            }
+            if(val==='spend_bonuses'){
+               this.filterAdditional(2)
+            }
+            if(val==='with_dancefloor'){
+               this.filterAdditional (3)
+            }
+        }
     }
 }
-
 </script>
 
+<style scoped>
 
+</style>
