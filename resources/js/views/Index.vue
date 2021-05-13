@@ -103,7 +103,7 @@
                             class="mb-2"
                         >
                             <b-card-text>
-                                <p v-html="item.description">
+                                <p class="description" v-html="item.description">
                                     Ресторан Vista находится на 30 этаже Ritz Carlton. </p>
                                 <div class="row">
                                     <div class="col-md-9">
