@@ -4,6 +4,8 @@ import Index from "./views/Index.vue";
 import Category from "./views/Category.vue";
 import Restaurant from "./views/Restaurant.vue";
 import Navbar from "./components/header/Navbar";
+import Login from "./views/Login";
+import Register from "./views/Register";
 import Footer from "./components/footer/Footer";
 import NotFound from "./components/NotFoundPage";
 
@@ -48,6 +50,24 @@ const router = new Router({
             }
         },
         {
+            path: "/login/",
+            name: "login",
+            components: { default: Login, header: Navbar, footer: Footer },
+            props: {
+                header: { colorOnScroll: 400 },
+                footer: { backgroundColor: "black" }
+            }
+        },
+        {
+            path: "/register/",
+            name: "Register",
+            components: { default: Register, header: Navbar, footer: Footer },
+            props: {
+                header: { colorOnScroll: 400 },
+                footer: { backgroundColor: "black" }
+            }
+        },
+        {
             path: "/404",
             name: "NotFoundPage",
             components: { default: NotFound, header: Navbar, footer: Footer },
@@ -56,6 +76,7 @@ const router = new Router({
                 footer: { backgroundColor: "black" }
             }
         },
+
 
 
     ]
@@ -67,6 +88,7 @@ router.afterEach(() => {
     if (appLoading) {
         appLoading.style.display = "none";
     }
+
 })
 export default router;
 

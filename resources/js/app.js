@@ -6,6 +6,8 @@
 
 import Vue from 'vue'
 import router from './router'
+import Vuex from 'vuex'
+import store from './store/index'
 window.Vue = require('vue').default;
 
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
@@ -14,6 +16,8 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 // Make BootstrapVue available throughout your project
 Vue.use(BootstrapVue)
+
+Vue.use(Vuex)
 
 // Optionally install the BootstrapVue icon components plugin
 Vue.use(IconsPlugin)
@@ -24,4 +28,5 @@ Vue.component('app', require('./components/App.vue').default);
 const app = new Vue({
     router,
     el: '#app',
+    store
 });

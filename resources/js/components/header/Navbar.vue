@@ -15,18 +15,18 @@
                         <b-dropdown-item disabled>Нур-Султан</b-dropdown-item>
                         <b-dropdown-item disabled>Шымкент</b-dropdown-item>
                     </b-nav-item-dropdown>
-                    <b-nav-item class="text-primary" href="#">Стать партнером</b-nav-item>
-                    <b-nav-item href="#">Контакты</b-nav-item>
-                    <b-nav-item v-if="!logged" href="#">Регистрация</b-nav-item>
+                    <b-nav-item @click="$router.push('/partnership')" class="text-primary" href="#">Стать партнером</b-nav-item>
+                    <b-nav-item @click="$router.push('/contacts')" href="#">Контакты</b-nav-item>
+                    <b-nav-item @click="$router.push('/register')" v-if="!logged" href="#">Регистрация</b-nav-item>
                     <!--                    <b-nav-item class="button-primary" href="#">Войти</b-nav-item>-->
-                    <b-button v-if="!logged">Войти</b-button>
+                    <b-button @click="$router.push('/login')" v-if="!logged">Войти</b-button>
                     <b-nav-item-dropdown right v-if="logged">
                         <!-- Using 'button-content' slot -->
                         <template #button-content>
                             <em>Пользователь</em>
                         </template>
-                        <b-dropdown-item href="#">Профиль</b-dropdown-item>
-                        <b-dropdown-item href="#">Выйти</b-dropdown-item>
+                        <b-dropdown-item href="/profile">Профиль</b-dropdown-item>
+                        <b-dropdown-item href="/logout">Выйти</b-dropdown-item>
                     </b-nav-item-dropdown>
                 </b-navbar-nav>
 

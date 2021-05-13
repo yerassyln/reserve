@@ -20,7 +20,7 @@
                 <div class="col-md-12 mt-5 subtitle">
                     <h4 class="mb-2">Контакты</h4>
                     <p class="mb-1"><b-icon-clock></b-icon-clock> &nbsp; <span v-html="restaurant.schedule"></span></p>
-                    <p class="mb-1"><b-icon-telephone></b-icon-telephone> &nbsp; <span v-html="restaurant.phone_number"></span></p>
+                    <p class="mb-1"><b-icon-teleb></b-icon-teleb> &nbsp; <span v-html="restaurant.phone_number"></span></p>
                     <p class="mb-1"><b-icon-instagram></b-icon-instagram> &nbsp; <a :href="restaurant.instagram">Instagram</a></p>
                     <p class="mb-1"><b-icon-geo-alt></b-icon-geo-alt> &nbsp; <span v-html="restaurant.address"> </span></p>
                 </div>
