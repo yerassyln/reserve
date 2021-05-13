@@ -5,6 +5,7 @@ import Category from "./views/Category.vue";
 import Restaurant from "./views/Restaurant.vue";
 import Navbar from "./components/header/Navbar";
 import Footer from "./components/footer/Footer";
+import NotFound from "./components/NotFoundPage";
 
 Vue.use(Router);
 const router = new Router({
@@ -18,6 +19,7 @@ const router = new Router({
         }
     },
     routes:[
+        { path: '*', redirect: '/404' },
         {
             path: "/",
             name: "index",
@@ -45,8 +47,20 @@ const router = new Router({
                 footer: { backgroundColor: "black" }
             }
         },
+        {
+            path: "/404",
+            name: "NotFoundPage",
+            components: { default: NotFound, header: Navbar, footer: Footer },
+            props: {
+                header: { colorOnScroll: 400 },
+                footer: { backgroundColor: "black" }
+            }
+        },
+
+
     ]
 })
+
 router.afterEach(() => {
     // Remove initial loading
     const appLoading = document.getElementById('loading-bg')

@@ -11,8 +11,17 @@
             </div>
             <div class="main-search w-50 mobile-full mt-5 ml-auto">
                 <b-nav-form>
-                    <b-form-input size="sm" class="mr-sm-2" placeholder="Поиск ресторанов"></b-form-input>
-                    <b-button size="sm" class="my-2 my-sm-0" type="submit">Искать</b-button>
+                    <vue-suggestion :items="searchList"
+                                    v-model="item"
+                                    :setLabel="setLabel"
+                                    @changed="inputChange"
+                                    :itemTemplate="ItemTemplate"
+                                    @selected="itemSelected">
+                    </vue-suggestion>
+<!--                    <b-form-input size="sm" class="mr-sm-2" placeholder="Поиск ресторанов"></b-form-input>-->
+                    <b-button size="sm" class="my-2 my-sm-0" @click="searchMain(item)">Искать</b-button>
+
+
                 </b-nav-form>
             </div>
         </div>
@@ -86,9 +95,10 @@
                     <router-link :to="{path:'/restaurant',query:{name:item.name}}">
                         <b-card
                             :title="item.name"
-                            img-src="/images/vista.png"
+                            :img-src="'/images/restaurants_photo/'+restaurantImages[item.id]"
                             img-alt="Image"
                             img-top
+                            img-height="200"
                             tag="article"
                             class="mb-2"
                         >
@@ -100,12 +110,12 @@
                                         <p class="address">
                                             <b-icon-cursor></b-icon-cursor>
                                             &nbsp
-                                            <span>Ritz Carlton hotel, пр. Аль-Фараби, 77/7</span>
+                                            <span v-html="item.address">Ritz Carlton hotel, пр. Аль-Фараби, 77/7</span>
                                         </p>
                                         <p>
-                                            <b-icon-phone></b-icon-phone>
+                                            <b-icon-telephone></b-icon-telephone>
                                             &nbsp
-                                            <span>+7 727 332 88 88</span>
+                                            <span v-html="item.phone_number">+7 727 332 88 88</span>
                                         </p>
                                     </div>
                                     <div class="col-md-3 grade">
@@ -125,7 +135,7 @@
             </div>
             <div class="search-block">
 
-                <form class="row">
+                <form class="row" action="/category">
                     <div class="col-md-4">
                         <div class="row">
                             <div class="col-md-6">
@@ -255,7 +265,7 @@
                         <div class="row">
                             <div class="col-md-12 text-center">
 
-                                <b-button class="my-2 my-sm-0" @click="search()">Искать</b-button>
+                                <b-button class="my-2 my-sm-0" @click="search()" type="submit">Искать</b-button>
                             </div>
                         </div>
                     </div>
@@ -267,14 +277,25 @@
 
 <script>
 import axios from 'axios'
+import ItemTemplate from './ItemTemplate';
+import { VueSuggestion } from 'vue-suggestion';
 
 export default {
     name: "Index",
     data() {
         return {
+            restaurantImages:[],
+            item: {},
+            items: [
+                { id: 1, name: 'Golden Retriever'},
+                { id: 2, name: 'Cat'},
+                { id: 3, name: 'Squirrel'},
+            ],
+            ItemTemplate,
             restaurantList: [],
+            restaurantListAll: [],
             categoriesList: [],
-
+            searchList:[],
             restaurant_type: 'chosen',
             typeOptions: [
                 {text: 'Вид кухни', value: 'chosen'},
@@ -320,28 +341,86 @@ export default {
         }
     },
     methods: {
+        itemSelected (item) {
+            this.item = item;
+        },
+        setLabel (item) {
+            return item.name;
+        },
+        inputChange (text) {
+            // your search method
+            let items = this.restaurantListAll
+            this.searchList = items.filter(item => {
+                if(item.name.toLowerCase().includes(text)){
+                    return item.name
+                }
+            });
+            // now `items` will be showed in the suggestion list
+        },
         search() {
 
+        },
+        searchMain(item) {
+            let url = item.name.replaceAll(" ","%20")
+            url = url.replaceAll("&","%26")
+
+            this.$router.push('/restaurant?name='+url)
         }
         ,
-        getRestaurantsMain() {
-            axios.post('/getRestaurantsMain').then(response => {
-                this.restaurantList = response.data
-            })
-        },
+
         getRestaurantsAll() {
-            axios.post('/getRestaurantsAll').then(response => {
-                this.categoriesList = response.data
-            })
+
         },
     },
-    components: {},
+    components: {
+        VueSuggestion,
+    },
     mounted() {
-        this.getRestaurantsMain();
-        this.getRestaurantsAll();
+        axios.post('/getRestaurantsAll').then(response => {
+            this.restaurantListAll = response.data
+            this.restaurantList = response.data
+        })
+        axios.post('/getFirstImage').then(response=>{
+            this.restaurantImages = response.data
+
+        })
     }
 }
 
 </script>
+<style scoped>
+.vue-suggestion .vs__list {
+    width: 100%;
+    text-align: left;
+    border: none;
+    border-top: none;
+    max-height: 400px;
+    overflow-y: auto;
+    position: relative;
+}
+.vue-suggestion .vs__list .vs__list-item {
+    background-color: #fff;
+    padding: 10px;
+}
+.vue-suggestion .vs__list .vs__list-item:last-child {
+    border-bottom: none;
+}
+.vue-suggestion .vs__list .vs__list-item:hover {
+    background-color: #eee !important;
+}
+.vs__input:active{
+    border: none;
+}
+.vue-suggestion .vs__list,
+.vue-suggestion .vs__loading {
+    position: absolute;
+}
+.vue-suggestion .vs__list .vs__list-item {
+    cursor: pointer;
+}
+.vue-suggestion .vs__list .vs__list-item.vs__item-active {
+    background-color: #f3f6fa;
+}
+</style>
 
 

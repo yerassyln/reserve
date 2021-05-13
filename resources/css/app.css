@@ -11,10 +11,11 @@ input[type="date"].form-control, input[type="time"].form-control{
 a{
     color: black;
 }
-a:hover {
+.carousel-control-prev:hover,.carousel-control-next:hover {
     text-decoration: none;
+    border: none;
 }
-.navbar-brand:hover{
+.navbar-brand:hover, .navbar-brand:active{
     border: none;
 }
 .container{
@@ -34,7 +35,11 @@ a:hover {
 
     color: #1FC043 !important;
 }
-
+.restaurant-map button{
+    padding: 0 !important;
+    background: none !important;
+    border: none !important;
+}
 .btn{
     background-color: #1FC043;
     border-color:#1FC043;
@@ -45,7 +50,12 @@ a:hover {
     color:#1FC043;
     box-shadow: 0 0 0 0.2rem rgb(31 192 67 / 0.5);
 }
-
+.flex{
+    display: flex;
+}
+.text-bolder{
+    font-weight: bold;
+}
 .navbar-nav .b-nav-dropdown a:hover{
     border-bottom: none;
 }
@@ -101,6 +111,9 @@ h4{
 .cards .card{
     cursor: pointer;
 }
+.cards .card-text p{
+    min-height: 90px;
+}
 .cards .card .card-title{
 
     text-align: center;
@@ -146,6 +159,17 @@ h4{
     flex-direction: column;
     justify-content: space-between;
 }
+.vs__list{
+    width: 100%;
+}
+.vs__list-item{
+    background-color: #fff;
+}
+.vs__item-active{
+    border-left: 2px solid #1FC043;
+    border-right: 2px solid #1FC043;
+}
+
 @media (max-width: 992px) {
 
     .mobile-full{
@@ -153,6 +177,9 @@ h4{
     }
 }
 @media (max-width:500px) {
+    .main-swiper{
+        overflow: hidden;
+    }
     .main-swiper img{
         width: auto !important;
         height:250px;

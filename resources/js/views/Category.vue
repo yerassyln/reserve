@@ -22,7 +22,7 @@
                             </div>
                             <hr>
                         </div>
-                        <div v-if="!this.$route.query.name" class="row mt-3">
+                        <div  class="row mt-3">
                             <div class="col-md-12">
                                 <b-form-group label="" v-slot="{ ariaDescribedby }">
                                     <b-form-radio-group
@@ -144,13 +144,19 @@
             </div>
             <div class="col-md-8">
                 <h4>Список ресторанов</h4>
+                <div class="mt-5">
+                    <h4 class="text-center" v-if="restaurantList.length == 0">
+
+                        Рестораны этой категории скоро появятся...
+                    </h4>
+                </div>
                 <div class="row mt-4">
 
                     <div class="col-md-6 mb-2" v-for="item in restaurantList" :key="item.id">
                         <router-link :to="{path:'/restaurant',query:{name:item.name}}">
                             <b-card
                                 :title="item.name"
-                                img-src="/images/vista.png"
+                                :img-src="'/images/restaurants_photo/'+restaurantImages[item.id]"
                                 img-alt="Image"
                                 img-top
                                 tag="article"
@@ -161,15 +167,15 @@
                                         Ресторан Vista находится на 30 этаже Ritz Carlton. </p>
                                     <div class="row">
                                         <div class="col-md-9">
-                                            <p class="address">
+                                            <p class="address" >
                                                 <b-icon-cursor></b-icon-cursor>
                                                 &nbsp
-                                                <span>Ritz Carlton hotel, пр. Аль-Фараби, 77/7</span>
+                                                <span v-html="item.address">Ritz Carlton hotel, пр. Аль-Фараби, 77/7</span>
                                             </p>
                                             <p>
                                                 <b-icon-phone></b-icon-phone>
                                                 &nbsp
-                                                <span>+7 727 332 88 88</span>
+                                                <span v-html="item.phone_number">+7 727 332 88 88</span>
                                             </p>
                                         </div>
                                         <div class="col-md-3 grade">
@@ -188,11 +194,11 @@
 
 <script>
 import axios from "axios";
-
 export default {
     name: "category",
     data() {
         return {
+            restaurantImages:[],
             restaurantList: [],
             restaurantListAll: [],
             restaurant_type: 'chosen',
@@ -245,15 +251,14 @@ export default {
                 {
                     category: this.$route.query.name
                 }).then(response => {
-
                 this.restaurantListAll = response.data
                 this.restaurantList = response.data
                 if(this.$route.query.name){
                     this.filterByCategory(this.$route.query.name)
                 }
-
             })
         },
+
         filterByCategory(val) {
             let restaurantList = this.restaurantListAll
 
@@ -302,7 +307,10 @@ export default {
     },
     mounted() {
         this.getRestaurantsAll();
+        axios.post('/getFirstImage').then(response=>{
+            this.restaurantImages = response.data
 
+        })
 
     },
     computed: {
@@ -312,6 +320,12 @@ export default {
         }
     },
     watch: {
+
+        restaurant_type: function (val){
+            if(val ==='type_all')
+            this.$router.push('/category')
+            this.restaurantList = this.restaurantListAll
+        },
         restaurant_chosen: function (val) {
             this.filterByCategory(val)
         },

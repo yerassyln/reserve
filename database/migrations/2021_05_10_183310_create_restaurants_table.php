@@ -20,6 +20,13 @@ class CreateRestaurantsTable extends Migration
             $table->string('description');
             $table->string('price');
             $table->string('rating');
+            $table->integer('feedback');
+            $table->string('schedule');
+            $table->string('instagram');
+            $table->string('address');
+            $table->longText('map');
+            $table->integer('places');
+            $table->string('inner_map');
             $table->boolean('discounts');
             $table->boolean('bonus_usage');
             $table->boolean('dance_fphloor');
